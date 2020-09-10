@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :jam_violation?, only: [:create]
+  before_action :authorized?, only: [:create]
 
   def create
     @user = User.create!(users_params)

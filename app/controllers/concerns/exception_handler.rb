@@ -5,6 +5,7 @@ module ExceptionHandler
     rescue_from ActiveRecord::RecordInvalid, with: :render_record_invalid_response
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     rescue_from JamViolation::ChuckNorrisError, with: :render_chuck_norris_response
+    rescue_from Authentication::AuthorizationError, with: :render_unauthorized_response
   end
 
   private 
@@ -22,10 +23,8 @@ module ExceptionHandler
     render json: { error: exception.message }, status: :not_acceptable
   end
 
-  # class ChuckNorrisError < StandardError
-  #   def message
-  #     "Never use Chuck Norris name in vain!  ᕙ(▀̿̿Ĺ̯̿̿▀̿ ̿) ᕗ  "
-  #   end
-  # end
+  def render_unauthorized_response(exception)
+    render json: { error: exception.message }, status: :unauthorized
+  end
 
 end
