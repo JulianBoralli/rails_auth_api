@@ -8,4 +8,6 @@ class User < ApplicationRecord
   validates_presence_of :email
   validates_uniqueness_of :email
   validates :email, format: { with: /\A[^@\s]+@([^@\s.]+\.)+[^@\W]+\z/ }
+  # validates :username, exclusion: { in: ["Chuck Norris"],
+  #   message: "Never use Chuck Norris name in vain!  ᕙ(▀̿̿Ĺ̯̿̿▀̿ ̿) ᕗ " }
 end

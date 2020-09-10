@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
+  before_action :jam_violation?, only: [:create]
 
   def create
-    @user = User.new(users_params)
-    @user.save!
+    @user = User.create!(users_params)
+    render @user, status: :created
   end
 
   def show
@@ -13,5 +14,6 @@ class UsersController < ApplicationController
 
 	def users_params
     params.permit(:username, :email, :password, :password_confirmation)
-	end
+  end
+  
 end
