@@ -6,6 +6,13 @@ Rails.application.routes.draw do
 
   # User Routes
   scope path: 'v1', :format => true, :constraints => { :format => 'json' } do
+    resources :users, only: [:show]
     post "/signup" => "users#create"
+  end
+
+  # Session Routes
+  scope path: 'v1', :format => true, :constraints => { :format => 'json' } do
+    post "/login" => "sessions#create"
+    delete "/logout" => "sessions#destroy"
   end
 end

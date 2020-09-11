@@ -6,6 +6,7 @@ module ExceptionHandler
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     rescue_from JamViolation::ChuckNorrisError, with: :render_chuck_norris_response
     rescue_from Authentication::AuthorizationError, with: :render_unauthorized_response
+    rescue_from Authentication::InvalidPassword, with: :render_invalid_password_response
   end
 
   private 
@@ -24,6 +25,10 @@ module ExceptionHandler
   end
 
   def render_unauthorized_response(exception)
+    render json: { error: exception.message }, status: :unauthorized
+  end
+
+  def render_invalid_password_response(exception)
     render json: { error: exception.message }, status: :unauthorized
   end
 

@@ -1,14 +1,14 @@
 class UsersController < ApplicationController
   before_action :jam_violation?, only: [:create]
-  before_action :authorized?, only: [:create]
+  before_action :authorized?, only: [:show]
 
   def create
     @user = User.create!(users_params)
-    render @user, status: :created
+    render json: { token: @user.auth_token}, status: :created
   end
 
   def show
-    
+    render json: { username: @user.username}, status: :ok
   end
 
   private
