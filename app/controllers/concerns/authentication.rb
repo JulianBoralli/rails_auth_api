@@ -20,6 +20,7 @@ module Authentication
   def authenticate_token
     authenticate_or_request_with_http_token do |token, options|
       @user = User.find_by(auth_token: token)
+      # ActiveSupport::SecurityUtils.secure_compare(token, @user.auth_token)
       return @user.present?
     end
   end

@@ -13,7 +13,6 @@ module ExceptionHandler
 
   def render_record_invalid_response(exception)
     render json: { error: exception.record.errors }, status: :unprocessable_entity
-    p exception.record.errors 
   end
 
   def render_not_found_response(exception)

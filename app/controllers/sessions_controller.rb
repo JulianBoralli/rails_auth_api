@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
 
   def create
     login_user
-    render json: { token: @user.auth_token}, status: :created
+    render json: { , id: @user.id, token: @user.auth_token}, status: :created
   end
 
   def destroy
