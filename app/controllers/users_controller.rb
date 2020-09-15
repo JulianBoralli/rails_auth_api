@@ -9,7 +9,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    render json: { username: @user.username}, status: :ok
   end
 
   private
