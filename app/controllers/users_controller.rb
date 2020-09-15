@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :jam_violation?, only: [:create]
+  before_action :authenticated?, only: [:show]
   before_action :authorized?, only: [:show]
 
   def create

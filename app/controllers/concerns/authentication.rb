@@ -1,38 +1,38 @@
 module Authentication
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
-  class AuthorizationError < StandardError
+  class InvalidToken < StandardError
     def message
-      "User not authorized. Please use a valid token!"
+      "User not authenticated. Please use a valid token!"
     end
   end
 
   class InvalidPassword < StandardError
     def message
-      "Login error. Please use a valid password!"
+      "User not authenticated. Please use a valid password!"
     end
   end
 
-  def authorized?
-    authenticate_token || (raise Authentication::AuthorizationError)
+  def authenticated?
+    authenticate_token || (raise Authentication::InvalidToken)
   end
 
   def authenticate_token
     authenticate_or_request_with_http_token do |token, options|
-      @user = User.find_by(auth_token: token)
+      @authenticated_user = User.find_by(auth_token: token)
       # ActiveSupport::SecurityUtils.secure_compare(token, @user.auth_token)
-      return @user.present?
+      return @authenticated_user.present?
     end
   end
 
   def login_user
-    @user = User.find_by_email!(params[:email])
-    @user.authenticate(params[:password]) || (raise Authentication::InvalidPassword)
-    @user.regenerate_auth_token
+    @authenticated_user = User.find_by_email!(params[:email])
+    @authenticated_user.authenticate(params[:password]) || (raise Authentication::InvalidPassword)
+    @authenticated_user.regenerate_auth_token
   end
 
   def logout_user
-    @user.update_columns(auth_token: nil)
+    @authenticated_user.update_columns(auth_token: nil)
   end
 end
   
