@@ -4,7 +4,10 @@ class SessionsController < ApplicationController
   def create
     login_user
     render json: { 
-      id: @authenticated_user.id, token: @authenticated_user.auth_token}, 
+        id: @authenticated_user.id, 
+        token: @authenticated_user.auth_token,
+        jwt_token: @jwt_token
+      }, 
       status: :created
   end
 
