@@ -8,6 +8,8 @@ module ExceptionHandler
     rescue_from Authentication::InvalidToken, with: :render_unauthorized_response
     rescue_from Authentication::InvalidPassword, with: :render_unauthorized_response
     rescue_from Authorization::AccessDenied, with: :render_unauthorized_response
+    # rescue_from JWT::VerificationError, with: :render_unauthorized_response
+    # rescue_from JWT::DecodeError, with: :render_unauthorized_response
   end
 
   private 
