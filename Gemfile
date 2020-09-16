@@ -36,6 +36,10 @@ group :development, :test do
   gem 'pry'
   gem 'pry-byebug'
   gem 'rb-readline'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'shoulda-matchers'
+  gem 'faker'
 end
 
 group :development do
