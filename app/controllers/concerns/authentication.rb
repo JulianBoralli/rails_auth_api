@@ -49,7 +49,7 @@ private
 
   def check_token_expiration
     seconds_since_last_call = Time.now - @authenticated_user.updated_at 
-    seconds_since_last_call > 20 ? expire_token : @authenticated_user.touch
+    seconds_since_last_call > 60*60*24 ? expire_token : @authenticated_user.touch
   end
 
   def expire_token
