@@ -34,6 +34,7 @@ private
     authenticate_or_request_with_http_token do |token, options|
       if token.size == 24
         @authenticated_user = User.find_by(auth_token: token)
+        check_token_expiration if @authenticated_user
       else
         begin
           decoded_token = JWT.decode token, Rails.application.credentials.jwt_authentication, true, { algorithm: 'HS256' }
@@ -44,6 +45,16 @@ private
       end
       return @authenticated_user.present?
     end
+  end
+
+  def check_token_expiration
+    seconds_since_last_call = Time.now - @authenticated_user.updated_at 
+    seconds_since_last_call > 20 ? expire_token : @authenticated_user.touch
+  end
+
+  def expire_token
+    @authenticated_user.update_columns(auth_token: nil)
+    @authenticated_user = nil
   end
 
   def generate_jwt

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   # Session Routes
   scope path: 'v1', :format => true, :constraints => { :format => 'json' } do
     post "/login" => "sessions#create"
+    get "/validate_access" => "sessions#show"
     delete "/logout" => "sessions#destroy"
   end
 end
