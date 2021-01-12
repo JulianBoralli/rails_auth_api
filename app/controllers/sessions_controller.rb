@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :authenticated?, only: [:destroy]
+  before_action :authenticated?, only: [:show, :destroy]
 
   def create
     login_user
@@ -9,6 +9,14 @@ class SessionsController < ApplicationController
         jwt_token: @jwt_token
       }, 
       status: :created
+  end
+
+  def show
+    render json: { 
+      id: @authenticated_user.id, 
+      token: @authenticated_user.auth_token,
+    }, 
+    status: :created
   end
 
   def destroy
